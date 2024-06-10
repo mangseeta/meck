@@ -1,0 +1,28 @@
+<html>
+<head>
+<title> เพิ่มข้อมูลหน่วยงาน</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+</head>
+<body>
+<h2 style="color:green"> เพิ่มหน่วยงาน </h2>
+<br>
+<form action="department_adddb.php" method="post" onload="cleartext()">
+dep_code
+<input type="text" name="dep_code" placeholder="รหัสหน่วยงาน" required> <br><br>
+dep_name
+<input type="text" name="dep_name" placeholder="ชื่อหน่วยงาน" required> <br> <br>
+
+<button> บันทึกข้อมูล </button>
+
+
+</form>
+
+
+</body>
+
+
+
+
+</html>

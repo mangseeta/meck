@@ -1,0 +1,43 @@
+<?php 
+require 'condb.php';
+$pttype = $_POST['pttype'];
+$departmentname = $_POST['departmentname'];
+$nameme = $_POST['nameme'];
+$dateme = $_POST['dateme'];
+$timeme = $_POST['timeme'];
+$workday = $_POST['workday1'];
+$workpr = $_POST['workperiod'];
+$lasa = $_POST['lasa'];
+$dd = $_POST['dd'];
+$drug1 = $_POST['drugname1'];
+$drug2 = $_POST['drugname2'];
+$prob = $_POST['prob'];
+$repdep = $_POST['departmentname2'];
+$reporter = $_POST['name2'];
+$repdate = $_POST['repdate'];
+$edit = $_POST['edit'];
+$editmt = $_POST['editmeth'];
+//$prob = $_POST['prob'];
+//$prob = $_POST['prob'];
+//$prob = $_POST['prob'];
+$sql = "INSERT INTO tbl_mederrordata 
+(pttype,department_me,person_me,date_me,time_me,workday,
+workperiod,lasa,drug_error,drug1,drug2,mem,reportdep,reporter
+,date_report,edit,edit_method)
+VALUES
+('$pttype','$departmentname','$nameme','$dateme','$timeme',
+'$workday','$workpr','$lasa','$dd','$drug1','$drug2','$prob','$repdep'
+,'$reporter','$repdate','$edit','$editmeth')
+";
+$result=mysqli_query($condb,$sql)or die("Error in sql:$sql".mysqli_error($sql));
+
+mysqli_close($condb);
+if ($result)
+{echo '<script type="text/JavaScript">';
+echo 'alert("บันทึกข้อมูลเรียบร้อย")';
+echo '</script>';
+echo '<script>window.location=("medata.php")</script>'; 
+
+}
+
+?>

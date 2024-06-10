@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="utf-8">
+</head>
+<body style="background-color:palegreen;">
+<hr style="background-color:Red;height:3px;color=green;"> <br>
+<form>
+<button type="submit" formaction="medata.php" formtarget="dashb">บันทึกข้อมูล ME </button> <br> <br>
+<button type="submit" formaction="form_drugs.php" formtarget="dashb"> บันทึกข้อมูลยา </button> <br> <br>
+<button type="submit" formaction="member.php" formtarget="dashb"> บันทึกข้อมูลเจ้าหน้าที่ </button> <br> <br>
+<button type="submit" formaction="dapartment.php" formtarget="dashb"> บันทึกข้อมูลหน่วยงาน </button> <br> <br>
+<button > บันทึกข้อมูล  </button> <br> <br>
+<button > บันทึกข้อมูล  </button> <br> <br>
+
+</form>
+<button onclick="exit"> จบการทำงาน </button> <br> <br>
+</body>
+
+ </html>

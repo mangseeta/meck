@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width initial-scale=1.0">
+<meta charset="utf-8">
+<style type="text/css">
+form {font-size:14px;
+	
+}
+</style>
+<?php
+date_default_timezone_set("Asia/Bangkok");
+?>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body style="background-color:pink;">
+<?php
+include ('condb.php');
+$sql="SELECT * FROM tbl_department ORDER BY departmentname ASC" or die("Error:" .mysqli_error());
+$result = mysqli_query($condb,$sql);
+?>
+<h2 style="color:darkblue;text-align:center"> บันทึกข้อมูล ความคลาเคลื่อนทางยา <h2>
+<div class="container">
+<form action="medata_adddb.php" method="post" class="form-group">
+ประเภทผู้ป่วย &nbsp;
+<select name="pttype" id="pttype">
+<option value="" selected disabled>-เลือกประเภทผู้ป่วย-</option>
+<option value="OPD">OPD</option>
+<option value="IPD">IPD</option>
+<option value="NCD">NDC REFILL</option>
+<option value="รพ.สต.">รพ.สต.</option>
+</select> &nbsp; &nbsp; 
+หน่วยงานที่เกิด error &nbsp; 
+<select name="departmentname" id="departmentname">
+		<option value="" selected disabled > เลือกหน่วยงาน </option>
+		<?php foreach ($result as $value){ ?>
+		<option value="<?=$value['departmentname']?>"><?=$value['departmentname']?> </option>
+		<?php }?>
+</select> 
+
+<label> ชื่อผู้เกี่ยวข้อง </label>
+<select name="nameme" id="nameme">
+</select> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$('#departmentname').change(function(){
+		//console.log($(this).val())
+		var id =$(this).val();
+		//console.log($(this).val())
+		$.ajax({
+			type: "POST",
+			url: "testajax.php",
+			data: {id:id,function:'departmentname'},
+			success: function(data) {
+				console.log(data);
+				$('#nameme').html(data);
+			}
+		});
+	});
+</script>
+<br> <br>
+วันที่เกิด &nbsp;
+<input type="date" name="dateme" id="dateme" ><br><br>
+ช่วงเวลา  &nbsp;
+<select name="timeme" id="timeme">
+<option value="" selected disabled > เลือกช่วงเวลา  </option>
+<option value="เร่งด่วน"> เร่งด่วน </option>
+<option value="ไม่เร่งด่วน"> ไม่เร่งด่วน </option>
+</select> &nbsp; &nbsp;
+วันทำงาน  &nbsp;
+<select name="workday1" id="workday1">
+<option value="" selected disabled > เลือกวันทำงาน  </option>
+<option value="วันทำงานปกติ"> ปกติ </option>
+<option value="วันหยุดสุดสัปดาห์"> วันหยุดสุดสัปดาห์ </option>
+<option value="วันหยุดนักขัตฤกษ์"> วันหยุดนักขัตฤกษ์ </option>
+</select> &nbsp; &nbsp
+เวร  &nbsp;
+<select name='workperiod' id='workperiod'>
+<option value="" selected disabled > เลือกเวร  </option>
+<option value="เวรเช้า"> เช้า </option>
+<option value="เวรบ่าย"> บ่าย </option>
+<option value="เวรดึก"> ดึก</option>
+</select> &nbsp; &nbsp; <br><br>
+LASA
+<input type="checkbox" name="lasa" id="lasa"> &nbsp; &nbsp;
+คู่ยาที่เกิด ME
+<input type="checkbox" id="dd" name="dd"> &nbsp; &nbsp;
+<!--<button onclick="uncheck(dd)"> ยกเลิก</button>
+<script>
+function uncheck() {
+  document.getElementById("dd").checked = false;
+}
+</script> -->
+ยาที่ถูก &nbsp;
+<?php
+include ('condb.php');
+$sql5="SELECT * FROM tbl_drugs ORDER BY drugname ASC" or die("Error:" .mysqli_error());
+$result5 = mysqli_query($condb,$sql5);
+?>
+<select name="drugname1" id="drugname1">
+<option value="" selected disabled > เลือกรายการยา 1 </option>
+<?php foreach ($result5 as $value3){?>
+<option value="<?=$value3['drugname']?>"><?=$value3['drugname']?> </option>
+		<?php }?>
+</select> &nbsp; &nbsp;
+<label for=> ยาที่ผิด  </label>&nbsp;
+<select name="drugname2" id="drugname2">
+<option value="" selected disabled > เลือกรายการยา 2 </option>
+<?php foreach ($result5 as $value3){?>
+<option value="<?=$value3['drugname']?>"><?=$value3['drugname']?> </option>
+		<?php }?>
+</select><br><br>
+ปัญหาที่เกิด &nbsp;
+<textarea rows="5" cols="30" name="prob" id="prob"> </textarea> <br><br>
+<?php
+include ('condb.php');
+$sql3="SELECT * FROM tbl_department ORDER BY departmentname ASC" or die("Error:" .mysqli_error());
+$result3 = mysqli_query($condb,$sql3);
+?>
+หน่วยงานที่รายงาน (&nbsp;
+<select name="departmentname2" id="departmentname2">
+		<option value="" selected disabled > เลือกหน่วยงาน </option>
+		<?php foreach ($result3 as $value2){ ?>
+		<option value="<?=$value2['departmentname']?>"><?=$value2['departmentname']?> </option>
+		<?php }?>
+</select> 
+
+<label> ผู้รายงาน </label>
+<select name="name2" id="name2">
+</select> <br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$('#departmentname2').change(function(){
+		//console.log($(this).val())
+		var id =$(this).val();
+		console.log($(this).val())
+		$.ajax({
+			type: "POST",
+			url: "ajax2.php",
+			data: {id:id,function:'departmentname2'},
+			success: function(data) {
+				console.log(data);
+				$('#name2').html(data);
+			}
+		});
+	});
+</script> <br>
+วันที่รายงาน &nbsp;
+<input type="date" name="repdate" id="repdate"><br><br>
+การแก้ไข &nbsp;
+<select name="edit" id="edit">
+<option value="แก้ไขได้"> แก้ไขได้ </option>
+<option value="แก้ไขไม่ได้"> แก้ไขไม่ได้ </option>
+</select> &nbsp; &nbsp;
+วิธีแก้ไข &nbsp;
+<textarea rows="5" cols="30" name="editmeth" id="editmeth"> </textarea> <br><br>
+วิเคราะห์สาเหตุของปัญหา :<br><br>
+ชนิดของปัญหา 1 &nbsp; 
+<?php
+//include ('condb.php');
+$sql7="SELECT * FROM tbl_causetype ORDER BY causename ASC" or die("Error:" .mysqli_error());
+$result7 = mysqli_query($condb,$sql7);
+?>
+<select name="pbtype1" id="pbtype1">
+<option value="" selected disabled > เลือกชนิดปัญหา1</option>
+<?php foreach ($result7 as $value4){?>
+<option value="<?=$value4['causename']?>"><?=$value4['causename']?> </option>
+		<?php }?>
+</select> &nbsp; &nbsp;
+สาเหตุของปัญหา 1&nbsp;
+<!--<label> ผู้รายงาน </label> -->
+<select name="cause1" id="cause2">
+</select> <br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$('#departmentname2').change(function(){
+		//console.log($(this).val())
+		var id =$(this).val();
+		console.log($(this).val())
+		$.ajax({
+			type: "POST",
+			url: "ajax2.php",
+			data: {id:id,function:'departmentname2'},
+			success: function(data) {
+				console.log(data);
+				$('#name2').html(data);
+			}
+		});
+	});
+</script> <br>
+<select>
+<option value="">อ่าน/แปลคำสั่งผิด</option>
+<option value="">คำนวณขนาดยาผิด</option>
+<option value="">ขาดความรู้/การฝึกอบรม</option>
+<option value="">ขาดการตรวจสอบซ้ำ</option>
+<option value="">ภาระงานจำนวนมาก</option>
+<option value="">มีเหตุฉุกเฉินระหว่างปฏิบัติงาน</option>
+</select> <br> <br>
+ชนิดของปัญหา 2 
+&nbsp;<select>
+<option value="">ปัญหาจากการสื่อสาร</option>
+<option value="">ปัญหาจากยา</option>
+<option value="">ปัญหาจากงาน/สิ่งแวดล้อม</option>
+<option value="">ปัญหาจากบุคลากร</option>
+</select>
+สาเหตุของปัญหา 2 &nbsp;
+<select>
+<option value="">อ่าน/แปลคำสั่งผิด</option>
+<option value="">คำนวณขนาดยาผิด</option>
+<option value="">ขาดความรู้/การฝึกอบรม</option>
+<option value="">ขาดการตรวจสอบซ้ำ</option>
+<option value="">ภาระงานจำนวนมาก</option>
+<option value="">มีเหตุฉุกเฉินระหว่างปฏิบัติงาน</option>
+</select> <br> <br>
+ระดับความเสี่ยง &nbsp;
+<select>
+<option value="">A</option>
+<option value="">B</option>
+<option value="">C</option>
+<option value="">D</option>
+<option value="">E</option>
+<option value="">F</option>
+<option value="">G</option>
+<option value="">H</option>
+<option value="">I</option>
+</select>&nbsp;&nbsp;
+ชนิด ME &nbsp;
+<select>
+<option value="">prescription error</option>
+<option value="">transcription error</option>
+<option value="">pre-dispensing error</option>
+<option value="">dispening error</option>
+<option value="">administration error</option>
+<option value="">mornitoring error</option>
+<option value="">compliance error</option>
+<option value="">processing error</option>
+</select> &nbsp;&nbsp;
+ประเภท ME &nbsp;
+<select> 
+<option>-เลือกจากตาราง tb_metype-</option>
+</select> &nbsp;&nbsp;
+ความเสี่ยงที่ป้องกันได้ &nbsp;
+<select>
+<option value="">A</option>
+<option value="">B</option>
+<option value="">C</option>
+<option value="">D</option>
+<option value="">E</option>
+<option value="">F</option>
+<option value="">G</option>
+<option value="">H</option>
+<option value="">I</option>
+</select>&nbsp;&nbsp;
+ผู้รายงาน (ดึงชื่อมาจากตารางล็อกอิน) <br><br>
+
+<button> บันทึกรายงาน </button>
+</form>
+</div>
+</body>
+
+ </html>
